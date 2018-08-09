@@ -1,0 +1,212 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
+    font-family: 'Coda', cursive;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    color: orange;
+    font-size: 50px;
+}
+.score-panel {
+    text-align: left;
+    margin-bottom: 30px;
+    margin-top: 10px;
+    padding-left: 15px; 
+    font-size: 25px;
+}
+.score-panel .stars {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    margin: 0 5px 0 0;
+    color: gold;
+}
+.score-panel .stars li {
+    list-style: none;
+    display: inline-block;
+}
+.score-panel .restart {
+    float: right;
+    cursor: pointer;
+    width: 40px;
+    height: 35px;
+    background: red;
+    border-radius: 3px;
+    color: white;
+    margin-left: 50px; 
+}
+h2{
+     text-align: center; 
+     font-size: 25px;
+     width: 200px; 
+     height: 70px; 
+     background: red;
+     border-radius: 5px;
+     cursor: pointer;
+     color: white; 
+     margin-top: 15px;
+     margin-left: 45px; 
+     padding: 15px;
+     font-style: italic;
+}
+.score-panel .stars{
+    padding-right: 20px;
+}
+.score-panel .rate{
+    color:red;
+}
+.score-panel .restart .fa{
+    padding-left: 8px;
+}
+.deck{
+    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.deck .card{
+    background: #2e3d49;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-style: preserve-3d;
+    transition: all 0.5s ease;
+}
+.deck .card.open {
+    transform: rotateY(180deg);
+    background: #02b3e4;
+    cursor: default;
+     font-size: 33px;
+}
+.deck .card.disable{
+    animation: bouncingOnWin 0.2s infinite;
+    position: relative;
+    background: orange;
+}
+.deck .card.match {
+    cursor: default;
+    background: #02ccba;
+    font-size: 25px;
+    animation: bouncing 1s ;
+    position: relative;
+}
+@keyframes bouncing{
+    0%{top: 0px;}
+    50%{top: 20px;color: green;}
+    100%{top: 0px;}
+}
+@keyframes bouncingOnWin{
+    0%{right: 0px;}
+    50%{right: 20px;}
+    100%{right: 0px;}
+}
+.timer{
+    font-size: 25px;
+}
+.congrat{
+    font-size: 40px;
+    color: #02ccba;
+}
+@media screen and (min-width:680px){
+.deck {
+    width: 660px;
+    min-height: 680px;
+    padding: 32px;
+    border-radius: 10px;
+    box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+    margin: 0 0 3em;
+}
+
+.deck .card {
+    height: 125px;
+    width: 125px;
+    border-radius: 8px;
+    box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+}
+}
+@media screen and (min-width:350px)and (max-width:679.9px){
+.deck {
+    width: 330px;
+    min-height: 340px;
+    padding: 16px;
+    border-radius: 5px;
+    box-shadow: 6px 7.5px 10px 0 rgba(46, 61, 73, 0.5);
+    margin: 0 0 1.5em;
+}
+
+.deck .card {
+    height: 62.5px;
+    width: 62.5px;
+    border-radius: 4px;
+    box-shadow: 2.5px 1px 10px 0 rgba(46, 61, 73, 0.5);
+}
+.deck .card.show {
+    font-size: 16.5px;
+}
+.congrat{
+    font-size: 30px;
+}
+}
+@media screen and (max-width:349.9px){
+.deck {
+    width: 247.5px;
+    min-height: 255px;
+    padding: 12px;
+    border-radius: 3.75px;
+    box-shadow: 4.5px 5.6px 7.5px 0 rgba(46, 61, 73, 0.5);
+    margin: 0 0 1.1em;
+}
+
+.deck .card {
+    height: 47px;
+    width: 47px;
+    border-radius: 3px;
+    box-shadow: 2px 0.8px 7px 0 rgba(46, 61, 73, 0.5);
+}
+.deck .card.show {
+    font-size: 12px;
+}
+
+.score-panel .stars {
+    margin-left: 50px;
+}
+.score-panel .restart {
+    float: right;
+  margin-right: 50px;
+}
+.congrat{
+    font-size: 30px;
+}
+}
+
