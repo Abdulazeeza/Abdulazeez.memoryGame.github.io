@@ -121,6 +121,31 @@ h2{
     animation: bouncing 1s ;
     position: relative;
 }
+.score-board{
+    
+}
+table{
+    margin-bottom: 20px;
+    border-color: #2e3d49;
+    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+    text-align: center;
+}
+.list{
+    font-size: 30px;
+}
+.topic{
+    width: 200px;
+    border-radius: 10px;
+    padding-left: 5px;
+
+}
+h3{
+    color: red;
+    font-size: 35px;
+}
+.a{
+    color: gold;
+}
 @keyframes bouncing{
     0%{top: 0px;}
     50%{top: 20px;color: green;}
