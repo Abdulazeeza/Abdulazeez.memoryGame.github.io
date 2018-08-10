@@ -3,9 +3,11 @@ let onTimer = false;
 let secs = 0;
 let mins = 0;
 let myTimer;
+playerNumber = 1;
 const replay = document.querySelector('h2'); 
 const deck  = document.querySelector('.deck');
 const restart = document.querySelector('.restart');
+const clipBoard = document.querySelector('.score-board');
 function shuffle(array) { // shuffle the cards
     var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -57,18 +59,37 @@ function winner() {   // shows the winner screen with the ratings and number of 
 }
 function disable() { // this remove the reactive behaviour after some time for cards that dont match
     const cardClicked  = document.querySelectorAll('.deck #tempId');
-    cardClicked[0].classList.toggle('disable');
-    cardClicked[1].classList.toggle('disable');
-    cardClicked[0].classList.toggle('open');
-    cardClicked[1].classList.toggle('open');
-    cardClicked[0].removeAttribute('id');
-    cardClicked[1].removeAttribute('id');
+     cardClicked[0].removeAttribute('id');
+     cardClicked[1].removeAttribute('id');
+     cardClicked[0].classList.toggle('disable');
+     cardClicked[1].classList.toggle('disable');
+     cardClicked[0].classList.toggle('open');
+     cardClicked[1].classList.toggle('open');
+   
 }
 function flipCard() { // this give a reactive behaviour when cards dont match
 	  const cardClicked  = document.querySelectorAll('.deck #tempId');
 	  cardClicked[0].classList.toggle('disable');
     cardClicked[1].classList.toggle('disable');
-    setTimeout( disable,500);
+    setTimeout(disable,500);
+}
+function countMoves() { //counts the number of moves and change the star  rating base on the number of moves 
+     const checkMove = document.querySelector('.movesClass');
+     const numMoves  = document.querySelector('.score-panel .moves');
+      ++(numMoves.innerHTML);
+      const starGrade  = document.querySelectorAll('.score-panel .stars li');
+     
+      if(numMoves.innerHTML == 26) {  //changes the rating to two stars at 26 moves
+           starGrade[2].setAttribute('style','color:#d3d3d3;');
+      } else if(numMoves.innerHTML == 36) { //changes the rating to two stars at 36 moves
+           starGrade[1].setAttribute('style','color:#d3d3d3;');
+      }
+
+      if(numMoves.innerHTML == 1) {  //checks for singular and plural for moves
+             checkMove.innerHTML = "move";
+      } else {
+             checkMove.innerHTML = "moves";
+      }
 }
 function compareCards() {  //this compares both cards and when they match ,it leaves them opened else it closes the card back by calling the flipCard function.
 	 const cardClicked  = document.querySelectorAll('.deck #tempId');
@@ -92,24 +113,6 @@ function compareCards() {  //this compares both cards and when they match ,it le
           winning=0;
       }
 }
-function countMoves() { //counts the number of moves and change the star  rating base on the number of moves 
-     const checkMove = document.querySelector('.movesClass');
-     const numMoves  = document.querySelector('.score-panel .moves');
-      ++(numMoves.innerHTML);
-      const starGrade  = document.querySelectorAll('.score-panel .stars li');
-     
-      if(numMoves.innerHTML == 26) {  //changes the rating to two stars at 26 moves
-           starGrade[2].setAttribute('style','color:#d3d3d3;');
-      } else if(numMoves.innerHTML == 36) { //changes the rating to two stars at 36 moves
-           starGrade[1].setAttribute('style','color:#d3d3d3;');
-      }
-
-      if(numMoves.innerHTML == 1) {  //checks for singular and plural for moves
-             checkMove.innerHTML = "move";
-      } else {
-             checkMove.innerHTML = "moves";
-      }
-}
 function showCard(clickedCard) { //this shows the card whenever it is clicked and when the lenght of the card is 2 it calls the function compareCards()
      
      clickedCard.setAttribute('id','tempId');
@@ -119,8 +122,7 @@ function showCard(clickedCard) { //this shows the card whenever it is clicked an
      if(card.length === 2) {   //check if two cards have been clicked, then compare them
            compareCards();
       }
-       
-     countMoves();
+      countMoves();
 }
 function resetScreen() {   //this reset the game to default
 	     shuffleCard();
@@ -133,8 +135,9 @@ function resetScreen() {   //this reset the game to default
 	     congrat.setAttribute('style','display: none;');
 	     restart.setAttribute('style','display: visible;');
        deck.setAttribute('style','display: visible;');
-       replay.style.display = 'none';
+       replay.style.display = 'none'; 
        resetTime();
+
 }
 function count() { //counts the time for both mins and seconds
      if(onTimer === true) {
@@ -167,20 +170,48 @@ function checkClicked(e) {  //checks for which cards was clicked
 	     if (e.target !== e.currentTarget) {
        
             if(e.target.className === "card" && e.target.className !== "match"){
-              
+                  
+                   showCard(e.target);
+
                  if (onTimer === false){  //starts the timer on first click
                     startTimer();
                     onTimer = true;
                 }
-                showCard(e.target);
-          }
+            }
      }
     e.stopPropagation();
+}
+function addScore(){
+      const PlayerMove = document.querySelector('.moves').innerHTML;
+      let PlayerRating;
+      if(PlayerMove < 26){
+        PlayerRating = '3 Stars';
+     }
+     else if(PlayerMove >= 26 && PlayerMove < 36){
+        PlayerRating = '2 Stars';
+     }
+     else{
+        PlayerRating = '1 Star';
+     }
+      const timeSpent = `${document.querySelector('.mins').innerHTML} mins : ${document.querySelector('.seconds').innerHTML} secs`;
+      const table = document.querySelector('table');
+      const addRow = table.insertRow(table.rows.length);
+      const cell1 = addRow.insertCell(0);
+      const cell2 = addRow.insertCell(1);
+      const cell3 = addRow.insertCell(2);
+      const cell4 = addRow.insertCell(3);
+      cell1.innerHTML = playerNumber;
+      cell2.innerHTML = PlayerMove;
+      cell3.innerHTML = PlayerRating;
+      cell4.innerHTML = timeSpent;
+      resetScreen();
+      clipBoard.style.display = 'block';
+      playerNumber++;
 }
 document.addEventListener('DOMContentLoaded',function() {
       
       resetScreen();   //this reset the game to default format
-      
+      clipBoard.style.display = 'none';
       deck.addEventListener("click", checkClicked, false); //this listens to the click event for the cards
       restart.addEventListener('click',resetScreen, false); // reset the game when the reset button is clicked
 
@@ -191,7 +222,7 @@ document.addEventListener('DOMContentLoaded',function() {
       restart.addEventListener('mouseout', function() {    //listens to the mouseout of the reset button
       	  restart.setAttribute('style','border:none;');
       }, false);
-      
-      replay.addEventListener('click',resetScreen,false); // allows the player to play again
+
+      replay.addEventListener('click',addScore,false);
 });     
          
