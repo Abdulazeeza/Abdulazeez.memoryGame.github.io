@@ -17,7 +17,7 @@ body {
 }
 
 body {
-    background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
+    background: linear-gradient(160deg, white 0%, #2e3d49 100%);
     font-family: 'Coda', cursive;
 }
 
@@ -57,7 +57,7 @@ h1 {
     cursor: pointer;
     width: 40px;
     height: 35px;
-    background: red;
+    background: linear-gradient(160deg, white 0%, #2e3d49 100%);
     border-radius: 3px;
     color: white;
     margin-left: 50px; 
@@ -67,7 +67,7 @@ h2{
      font-size: 25px;
      width: 200px; 
      height: 70px; 
-     background: red;
+     background: linear-gradient(160deg, white 0%, #2e3d49 100%);
      border-radius: 5px;
      cursor: pointer;
      color: white; 
@@ -86,14 +86,14 @@ h2{
     padding-left: 8px;
 }
 .deck{
-    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+   background: linear-gradient(160deg, white 0%, #2e3d49 100%);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
 }
 .deck .card{
-    background: #2e3d49;
+     background: linear-gradient(160deg, #2e3d49 0%, white 100%);
     color: #ffffff;
     cursor: pointer;
     font-size: 0px;
@@ -105,29 +105,28 @@ h2{
 }
 .deck .card.open {
     transform: rotateY(180deg);
-    background: #02b3e4;
+    background: linear-gradient(160deg, #2e3d49 0%, white 100%);
     cursor: default;
-     font-size: 33px;
+    font-size: 35px;
 }
 .deck .card.disable{
     animation: bouncingOnWin 0.2s infinite;
     position: relative;
-    background: orange;
 }
 .deck .card.match {
     cursor: default;
-    background: #02ccba;
-    font-size: 25px;
+    background: linear-gradient(160deg, #2e3d49 0%, grey 100%);
+    font-size: 22px;
     animation: bouncing 1s ;
     position: relative;
 }
-.score-board{
-    
+.deck .card .fa{
+	color:black;
 }
 table{
     margin-bottom: 20px;
     border-color: #2e3d49;
-    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+    background: linear-gradient(160deg, white 0%, #2e3d49 100%);
     text-align: center;
 }
 .list{
@@ -153,7 +152,7 @@ h3{
 }
 @keyframes bouncingOnWin{
     0%{right: 0px;}
-    50%{right: 20px;}
+    50%{right: 20px;color: red;}
     100%{right: 0px;}
 }
 .timer{
@@ -161,26 +160,26 @@ h3{
 }
 .congrat{
     font-size: 40px;
-    color: #02ccba;
+    color: black;
 }
-@media screen and (min-width:700px){
+@media screen and (min-width:680px){
 .deck {
-    width: 726px;
-    min-height: 748px;
-    padding: 35px;
-    border-radius: 12px;
+    width: 660px;
+    min-height: 680px;
+    padding: 32px;
+    border-radius: 10px;
     box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
     margin: 0 0 3em;
 }
 
 .deck .card {
-    height: 138px;
-    width: 138px;
-    border-radius: 9px;
+    height: 125px;
+    width: 125px;
+    border-radius: 8px;
     box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
 }
 }
-@media screen and (min-width:350px)and (max-width:699.9px){
+@media screen and (min-width:350px)and (max-width:679.9px){
 .deck {
     width: 363px;
     min-height: 374px;
@@ -200,7 +199,7 @@ h3{
     font-size: 17px;
 }
 .congrat{
-    font-size: 30px;
+    font-size: 32px;
 }
 }
 @media screen and (max-width:349.9px){
@@ -228,7 +227,7 @@ h3{
 }
 .score-panel .restart {
     float: right;
-  margin-right: 50px;
+   margin-right: 50px;
 }
 .congrat{
     font-size: 30px;
