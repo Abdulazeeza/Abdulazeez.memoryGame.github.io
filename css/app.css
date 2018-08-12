@@ -93,7 +93,7 @@ h2{
     align-items: center;
 }
 .deck .card{
-     background: linear-gradient(160deg, #2e3d49 0%, white 100%);
+    background: linear-gradient(160deg, #2e3d49 0%, white 100%);
     color: #ffffff;
     cursor: pointer;
     font-size: 0px;
@@ -105,23 +105,24 @@ h2{
 }
 .deck .card.open {
     transform: rotateY(180deg);
-    background: linear-gradient(160deg, #2e3d49 0%, white 100%);
+    background: linear-gradient(160deg, red 0%, white 100%);
     cursor: default;
     font-size: 35px;
 }
 .deck .card.disable{
     animation: bouncingOnWin 0.2s infinite;
     position: relative;
+    background: linear-gradient(160deg, red 0%, black 100%);
 }
 .deck .card.match {
     cursor: default;
-    background: linear-gradient(160deg, #2e3d49 0%, grey 100%);
+     background: linear-gradient(160deg, red 0%, yellow 100%);
     font-size: 22px;
     animation: bouncing 1s ;
     position: relative;
 }
 .deck .card .fa{
-	color:black;
+	color: black;
 }
 table{
     margin-bottom: 20px;
