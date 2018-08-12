@@ -3,11 +3,12 @@ let onTimer = false;
 let secs = 0;
 let mins = 0;
 let myTimer;
-playerNumber = 1;
+let playerNumber = 1;
 const replay = document.querySelector('h2'); 
 const deck  = document.querySelector('.deck');
 const restart = document.querySelector('.restart');
 const clipBoard = document.querySelector('.score-board');
+
 function shuffle(array) { // shuffle the cards
     var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -38,7 +39,7 @@ function shuffleCard() {   //checks for the neccesary things and also convert th
         
           }
           if(card[count].id === 'tempId'){ //remove the id with name tempId
-                     card[count].removeAttribute('id', 'tempId');  
+              card[count].removeAttribute('id', 'tempId');  
           }
           ++count;
       }
@@ -54,24 +55,88 @@ function winner() {   // shows the winner screen with the ratings and number of 
 	const congrat = document.querySelector('.congrat');
 	congrat.setAttribute('style','display: visible;');
 	restart.setAttribute('style','display: none;');
-  replay.style.display = 'block';
-  stopTimer();
+    replay.style.display = 'block';
+    clipBoard.style.display = 'none';
+    stopTimer();
 }
 function disable() { // this remove the reactive behaviour after some time for cards that dont match
-    const cardClicked  = document.querySelectorAll('.deck #tempId');
-     cardClicked[0].removeAttribute('id');
-     cardClicked[1].removeAttribute('id');
+     const cardClicked  = document.querySelectorAll('.deck #tempId');
      cardClicked[0].classList.toggle('disable');
      cardClicked[1].classList.toggle('disable');
      cardClicked[0].classList.toggle('open');
      cardClicked[1].classList.toggle('open');
-   
+     cardClicked[0].removeAttribute('id');
+     cardClicked[1].removeAttribute('id');
 }
 function flipCard() { // this give a reactive behaviour when cards dont match
-	  const cardClicked  = document.querySelectorAll('.deck #tempId');
-	  cardClicked[0].classList.toggle('disable');
-    cardClicked[1].classList.toggle('disable');
-    setTimeout(disable,500);
+	 const cardClicked  = document.querySelectorAll('.deck #tempId');
+	 cardClicked[0].classList.toggle('disable');
+     cardClicked[1].classList.toggle('disable');
+     setTimeout(disable,400);
+}
+function compareCards() {  //this compares both cards and when they match ,it leaves them opened else it closes the card back by calling the flipCard function.
+	 const cardClicked  = document.querySelectorAll('.deck #tempId');
+     const cards = document.querySelectorAll('.deck #tempId .fa');     
+  
+         if(cards[0].classList.value === cards[1].classList.value) {
+         	cardClicked[0].classList.toggle('match');
+         	cardClicked[1].classList.toggle('match'); 
+         	cardClicked[0].removeAttribute('id');
+         	cardClicked[1].removeAttribute('id');
+            winning++;
+
+          }else {
+          	cardClicked.length = 0;
+            flipCard();
+         }
+ 
+      if(winning === 8) { // this checks if all cards have being match and calls the winner function after 1 sec
+          winning = 0;
+          setTimeout(winner,1000); 
+      }
+}
+function showCard(clickedCard) { //this shows the card whenever it is clicked and when the lenght of the card is 2 it calls the function compareCards()
+    
+     clickedCard.setAttribute('id','tempId');
+     clickedCard.classList.toggle('open');
+     const card  = document.querySelectorAll('.deck #tempId');
+
+     if(card.length === 2) {   //check if two cards have been clicked, then compare them
+           compareCards();
+      }
+      countMoves();
+}
+function checkClicked(e) {  //checks for which cards was clicked
+
+	     if (e.target !== e.currentTarget) {
+       
+            if(e.target.className === "card" && e.target.className !== "match"){
+                  
+                   showCard(e.target);
+
+                 if (onTimer === false){  //starts the timer on first click
+                    startTimer();
+                    onTimer = true;
+                }
+            }
+     }
+     event.preventDefault()
+     event.stopPropagation();
+}
+function resetScreen() {   //this reset the game to default
+	   shuffleCard();
+       const numMoves  = document.querySelector('.score-panel .moves');
+       const starGrade  = document.querySelectorAll('.score-panel .stars li');
+       const congrat = document.querySelector('.congrat');
+	   numMoves.innerHTML = 0;
+       starGrade[2].setAttribute('style','color:gold;');
+       starGrade[1].setAttribute('style','color:gold;');
+	   congrat.setAttribute('style','display: none;');
+	   restart.setAttribute('style','display: visible;');
+       deck.setAttribute('style','display: visible;');
+       replay.style.display = 'none'; 
+       resetTime();
+       winning = 0;
 }
 function countMoves() { //counts the number of moves and change the star  rating base on the number of moves 
      const checkMove = document.querySelector('.movesClass');
@@ -91,54 +156,6 @@ function countMoves() { //counts the number of moves and change the star  rating
              checkMove.innerHTML = "moves";
       }
 }
-function compareCards() {  //this compares both cards and when they match ,it leaves them opened else it closes the card back by calling the flipCard function.
-	 const cardClicked  = document.querySelectorAll('.deck #tempId');
-     const cards = document.querySelectorAll('.deck #tempId .fa');     
-    
-      if(cardClicked.length === 2) {
-  
-         if(cards[0].classList.value === cards[1].classList.value) {
-         	
-          cardClicked[0].classList.toggle('match');
-         	cardClicked[1].classList.toggle('match'); 
-         	cardClicked[0].removeAttribute('id');
-         	cardClicked[1].removeAttribute('id');
-            winning++;
-          }else {
-              flipCard();
-         }
-      }
-      if(winning === 8) { // this checks if all cards have being match and calls the winner function after 1 sec
-          setTimeout(winner,1000); 
-          winning=0;
-      }
-}
-function showCard(clickedCard) { //this shows the card whenever it is clicked and when the lenght of the card is 2 it calls the function compareCards()
-     
-     clickedCard.setAttribute('id','tempId');
-     const card  = document.querySelectorAll('.deck #tempId');
-     clickedCard.classList.toggle('open');
-
-     if(card.length === 2) {   //check if two cards have been clicked, then compare them
-           compareCards();
-      }
-      countMoves();
-}
-function resetScreen() {   //this reset the game to default
-	     shuffleCard();
-       const numMoves  = document.querySelector('.score-panel .moves');
-       const starGrade  = document.querySelectorAll('.score-panel .stars li');
-       const congrat = document.querySelector('.congrat');
-	     numMoves.innerHTML = 0;
-       starGrade[2].setAttribute('style','color:gold;');
-       starGrade[1].setAttribute('style','color:gold;');
-	     congrat.setAttribute('style','display: none;');
-	     restart.setAttribute('style','display: visible;');
-       deck.setAttribute('style','display: visible;');
-       replay.style.display = 'none'; 
-       resetTime();
-
-}
 function count() { //counts the time for both mins and seconds
      if(onTimer === true) {
           secs++;
@@ -156,7 +173,7 @@ function startTimer() { //starts the time when player click the first card
 }
 function stopTimer() { // stop the the time when finish with the game
 	  onTimer = false;
-    clearInterval(myTimer);
+      clearInterval(myTimer);
 }
 function resetTime() { // resets the time
        stopTimer();
@@ -165,35 +182,36 @@ function resetTime() { // resets the time
        document.querySelector('.seconds').innerHTML = secs;
        document.querySelector('.mins').innerHTML = mins;
 }
-function checkClicked(e) {  //checks for which cards was clicked
-	     
-	     if (e.target !== e.currentTarget) {
-       
-            if(e.target.className === "card" && e.target.className !== "match"){
-                  
-                   showCard(e.target);
-
-                 if (onTimer === false){  //starts the timer on first click
-                    startTimer();
-                    onTimer = true;
-                }
-            }
-     }
-    e.stopPropagation();
-}
-function addScore(){
+function addScore() {
       const PlayerMove = document.querySelector('.moves').innerHTML;
       let PlayerRating;
-      if(PlayerMove < 26){
+      let timeSpent;
+      let minSpend;
+      let secSpend;
+     
+     if(PlayerMove < 26){
         PlayerRating = '3 Stars';
      }
-     else if(PlayerMove >= 26 && PlayerMove < 36){
+     else if(PlayerMove >= 26 && PlayerMove < 36) {
         PlayerRating = '2 Stars';
      }
      else{
         PlayerRating = '1 Star';
      }
-      const timeSpent = `${document.querySelector('.mins').innerHTML} mins : ${document.querySelector('.seconds').innerHTML} secs`;
+
+     if(document.querySelector('.mins').innerHTML == 1) {
+        minSpend = `${document.querySelector('.mins').innerHTML} min : `;
+     } else {
+        minSpend = `${document.querySelector('.mins').innerHTML} mins : `;
+     }
+
+     if(document.querySelector('.seconds').innerHTML == 1){
+        secSpend = `${document.querySelector('.seconds').innerHTML} sec`;
+     }else {
+        secSpend = `${document.querySelector('.seconds').innerHTML} secs`;
+     }
+
+      timeSpent = minSpend + secSpend;
       const table = document.querySelector('table');
       const addRow = table.insertRow(table.rows.length);
       const cell1 = addRow.insertCell(0);
@@ -224,5 +242,9 @@ document.addEventListener('DOMContentLoaded',function() {
       }, false);
 
       replay.addEventListener('click',addScore,false);
+      deck.addEventListener("click",function(event){
+         event.preventDefault()
+         event.stopPropagation();
+      }, false);
 });     
          
