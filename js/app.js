@@ -62,10 +62,12 @@ function winner() {   // shows the winner screen with the ratings and number of 
 function disable() { // this remove the reactive behaviour after some time for cards that dont match
      const cardClicked  = document.querySelectorAll('.deck #tempId');
      const card = document.querySelectorAll('.deck .card');
+     const mainCard = document.querySelectorAll('.deck .card');
      let countDisable = 0;
      cardClicked[0].classList.toggle('open');  //remove class open to card 1
      cardClicked[1].classList.toggle('open');  //remove class open to card 2 
 
+     
      for(const cards of Array.from(card)){ // loops through all the cards to check if they is any overlap 
          
           if(card[countDisable].classList.contains('disable')){ //if card contains the disable class then remove
@@ -84,9 +86,9 @@ function disable() { // this remove the reactive behaviour after some time for c
 }
 function flipCard() { // this give a reactive behaviour when cards dont match
 	 const cardClicked  = document.querySelectorAll('.deck #tempId');
-	 cardClicked[0].classList.toggle('disable');
-     cardClicked[1].classList.toggle('disable');
-     setTimeout(disable,500); 
+	 cardClicked[0].classList.toggle('disable');  //add the disable card
+     cardClicked[1].classList.toggle('disable');  //add the disable card
+     setTimeout(disable,600);  //wait for 600ms and call disable function
 }
 function compareCards() {  //this compares both cards and when they match ,it leaves them opened else it closes the card back by calling the flipCard function.
 	 const cardClicked  = document.querySelectorAll('.deck #tempId');
