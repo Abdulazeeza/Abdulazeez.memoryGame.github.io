@@ -182,22 +182,22 @@ h3{
 }
 @media screen and (min-width:350px)and (max-width:679.9px){
 .deck {
-    width: 330px;
-    min-height: 340px;
-    padding: 16px;
-    border-radius: 5px;
+    width: 363px;
+    min-height: 374px;
+    padding: 16.7px;
+    border-radius: 6px;
     box-shadow: 6px 7.5px 10px 0 rgba(46, 61, 73, 0.5);
     margin: 0 0 1.5em;
 }
 
 .deck .card {
-    height: 62.5px;
-    width: 62.5px;
-    border-radius: 4px;
+    height: 69px;
+    width: 69px;
+    border-radius: 5px;
     box-shadow: 2.5px 1px 10px 0 rgba(46, 61, 73, 0.5);
 }
 .deck .card.show {
-    font-size: 16.5px;
+    font-size: 17px;
 }
 .congrat{
     font-size: 30px;
