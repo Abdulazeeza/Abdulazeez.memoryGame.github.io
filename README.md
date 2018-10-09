@@ -1,5 +1,8 @@
 # Memory Game Project
    This project test your memory by the use of cards to see how good you can retain and recall.
+   
+## How to download
+Click the clone or download button in the github repository to get the files, you can either download the compress file or open the folder on your desktop, if the compress file was downloaded then you will have to unzip the folder in order to load the the index.html
  
 ## Resources
 * HTML
